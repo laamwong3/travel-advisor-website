@@ -1,7 +1,8 @@
+import Dashboard from "@/components/home/Dashboard";
 import React from "react";
 
 const page = () => {
-  return <div className="font-montserrat">page</div>;
+  return <Dashboard />;
 };
 
 export default page;
