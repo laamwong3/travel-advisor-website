@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
-
+import { Country } from "country-state-city";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,28 +19,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+const frameworks = Country.getAllCountries().map((country) => ({
+  value: country.name,
+  label: country.name,
+}));
 
 export default function SelectLocation() {
   const [open, setOpen] = React.useState(false);
@@ -63,7 +45,7 @@ export default function SelectLocation() {
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0 md:w-[400px]">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder="Search location..." />
           <CommandEmpty>No framework found.</CommandEmpty>
           <CommandGroup>
             <CommandList>
