@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React from "react";
 import backgroundImage from "@/assets/images/backgroundImage.jpeg";
-import SelectLocation from "./SelectLocation";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
@@ -16,9 +15,8 @@ const LandingPage = () => {
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-3xl font-bold">
         <h1 className="mb-4">where are you going?</h1>
         <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
-          <SelectLocation />
-          <Link href={"#"}>
-            <Button>GO</Button>
+          <Link href={"/main"} className="flex items-center">
+            <Button className="w-[200px]">Explore</Button>
           </Link>
         </div>
       </div>
