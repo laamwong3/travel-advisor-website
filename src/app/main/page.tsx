@@ -8,10 +8,10 @@ const page = () => {
     <div className="fixed flex h-screen w-screen flex-col">
       <Navbar />
       <div className="flex h-full">
-        <div className="w-full border-r-2 md:w-1/4">
+        <div className="h-full w-full border-r-2 xl:w-1/3">
           <Menubar />
         </div>
-        <div className="hidden w-full md:block md:w-3/4">
+        <div className="hidden w-full md:block xl:w-2/3">
           <Map />
         </div>
       </div>
