@@ -21,7 +21,10 @@ import {
   setSelectedCountry,
   setSelectedState,
   setSelectedCity,
+  locationStore,
 } from "@/stores/locationStore";
+import { setCoords, setZoomLevel } from "@/stores/mapStore";
+import { City, Country, State } from "country-state-city";
 
 interface TFrameworks {
   frameworks: Array<{
@@ -38,10 +41,57 @@ export default function SelectLocation({ frameworks, type }: TFrameworks) {
   const updateLocation = (currentValue: string) => {
     if (type === "country") {
       setSelectedCountry(currentValue);
+      const coords = Country.getAllCountries().find(
+        (country) => country.name === currentValue,
+      );
+      if (coords?.latitude !== undefined && coords?.longitude !== undefined) {
+        setCoords({
+          lat: Number(coords.latitude),
+          lng: Number(coords.longitude),
+        });
+        setZoomLevel(4);
+      }
     } else if (type === "state") {
       setSelectedState(currentValue);
+      const selectedCountry = Country.getAllCountries().find(
+        (country) => country.name === locationStore.selectedCountry,
+      );
+      const coords = State.getStatesOfCountry(selectedCountry?.isoCode).find(
+        (state) => state.name === currentValue,
+      );
+      if (coords?.latitude !== undefined && coords?.longitude !== undefined) {
+        setCoords({
+          lat: Number(coords.latitude),
+          lng: Number(coords.longitude),
+        });
+        setZoomLevel(8);
+      }
     } else if (type === "city") {
       setSelectedCity(currentValue);
+      const selectedCountry = Country.getAllCountries().find(
+        (country) => country.name === locationStore.selectedCountry,
+      );
+
+      const selectedState = State.getStatesOfCountry(
+        selectedCountry?.isoCode,
+      ).find((state) => state.name === locationStore.selectedState);
+
+      if (
+        selectedCountry?.isoCode !== undefined &&
+        selectedState?.isoCode !== undefined
+      ) {
+        const coords = City.getCitiesOfState(
+          selectedCountry?.isoCode,
+          selectedState?.isoCode,
+        ).find((city) => city.name === currentValue);
+        if (coords?.latitude !== undefined && coords?.longitude !== undefined) {
+          setCoords({
+            lat: Number(coords.latitude),
+            lng: Number(coords.longitude),
+          });
+          setZoomLevel(12);
+        }
+      }
     }
   };
 
